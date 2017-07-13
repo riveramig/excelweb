@@ -1,4 +1,4 @@
-$(document).ready(function(){
+/*$(document).ready(function(){
 	var datas={};
 	$.get("http://localhost:27000/",function(data){
 		for (var i = 0; i <data.length ; i++) {
@@ -15,4 +15,4 @@ $(document).ready(function(){
 		}
 	});
 	var checks = $('#check');
-});
+});*/

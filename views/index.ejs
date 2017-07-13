@@ -1,19 +1,44 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
 <head >
-	<title>:v</title>
+	<title>Modulo de pagos</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 	<script src="controller.js"></script>
 	<script src="test.js"></script>
 </head>
 <body ng-controller="mainCtrl as main">
-	<div class="table-resposive">
+
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Independence</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<form class="navbar-form navbar-left">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search" ng-model="searchBox">
+					</div>
+				</form>
+				<form class="navbar-form navbar-right">
+					<span style="font-size: 10px">Diseñado por: Miguel Angel Rivera</span>
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Carrito</button>
+				</form>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+
+
+	<div class="table-resposive" style="margin-top: 5%">
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -24,9 +49,57 @@
 					<th>Edades</th>
 					<th>Suma importe pendiente</th>
 				</tr>
-			<tbody id="tbody">
-			</tbody>
-		</table>
-	</div>
-</body>
-</html>
+				<tbody id="tbody">
+					<tr ng-repeat="data in main.dd | filter:searchBox">
+						<th><button class="btn btn-success btn-sm" ng-click="main.addCart(data)">Agregar</button></th>
+						<th>{{data["Descrip Proveedor"]}}</th>
+						<th>{{data["Numero de Factura"]}}</th>
+						<th>{{data["Zona factura"]}}</th>
+						<th>{{data["Edades"]}}</th>
+						<th>{{data["Suma de Importe pendiente"]}}</th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Seleccionados actualmente</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Seleccionar</th>
+									<th>Descripccion proveedor</th>
+									<th>Numero factura</th>
+									<th>Zona factura</th>
+									<th>Edades</th>
+									<th>Suma importe pendiente</th>
+								</tr>
+								<tbody id="tbody">
+								<tr ng-repeat="data in main.carrito">
+										<th><button class="btn btn-danger btn-sm" ng-click="main.removeCart(data)">Eliminar</button></th>
+										<th>{{data["Descrip Proveedor"]}}</th>
+										<th>{{data["Numero de Factura"]}}</th>
+										<th>{{data["Zona factura"]}}</th>
+										<th>{{data["Edades"]}}</th>
+										<th>{{data["Suma de Importe pendiente"]}}</th>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="modal-footer">
+							<span>Total: <span ng-bind="main.getTotal() | currency"></span></span>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+							<button type="button" class="btn btn-primary">Guardar selección</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</body>
+		</html>
