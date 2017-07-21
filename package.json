@@ -13,8 +13,10 @@
     "ejs": "~2.5.6",
     "excel-to-json": "^1.0.0",
     "express": "~4.15.2",
+    "json2csv": "^3.9.1",
     "morgan": "~1.8.1",
     "node-excel-to-json": "0.0.3",
+    "sanitize-filename": "^1.6.1",
     "serve-favicon": "~2.4.2",
     "xlsx-to-json": "^0.3.0"
   }

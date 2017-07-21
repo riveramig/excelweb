@@ -1,8 +1,15 @@
 var express = require('express');
 var router = express.Router();
+var sanitize = require('sanitize-filename');
 var fs = require('fs');
-var excel2json = require('xlsx-to-json');
 var xlsxj = require("xlsx-to-json");
+var json2csv =  require('json2csv');
+var fields = ['Descrip Proveedor','Edades','Numero de Factura','Suma de Importe pendiente','Zona factura'];
+
+//var stream=fs.createWriteStream('routes/sample.json');
+//var csv=require('csvtojson');
+
+
 /* GET home page. */
 
 xlsxj({
@@ -16,8 +23,7 @@ xlsxj({
 		}
 	});
 
-router.get('/', function(req, res, next) {
-
+router.get('/', function(req, res, next) {;
 	res.sendFile(__dirname+'/output.json');
 });
 
@@ -25,7 +31,19 @@ router.get('/table',function(req,res){
 	res.render('index');
 })
 
-router.get('/test',function(req,res){
-	res.json({data:1});
+router.post('/sendData',function(req,res){
+	console.log(req.body.date);
+	var result = json2csv({data:req.body.cart,fields:fields});
+	var temp='Facturas-'+req.body.date;
+	//-----
+	var fileName=sanitize(temp);
+	var directory='C:/Users/practicanteti/SharePoint/Pruebas - Documentos/'+fileName;
+	console.log(fileName);
+	fs.mkdirSync(directory);
+	fs.writeFile(directory+'/'+fileName+'.csv',result,function(err){
+		if(err) throw err;
+		console.log('file saved');
+	})
+	res.json({message:'data sent'});
 })
 module.exports = router;

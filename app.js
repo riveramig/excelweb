@@ -32,8 +32,12 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-app.listen(27001);
-console.log('listening on port 27001');
+var port=27001;
+
+app.listen(port,function(){
+	console.log('Carrito web listening on port: '+port);
+});
+
 
 // error handler
 app.use(function(err, req, res, next) {
